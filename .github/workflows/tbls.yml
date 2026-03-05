@@ -6,10 +6,12 @@ on:
     paths:
       - "schema/**"
       - ".tbls.yml"
+      - ".github/workflows/tbls.yml"
   pull_request:
     paths:
       - "schema/**"
       - ".tbls.yml"
+      - ".github/workflows/tbls.yml"
 
 jobs:
   tbls:
