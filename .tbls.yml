@@ -1,7 +1,7 @@
 # tbls configuration
 # https://github.com/k1LoW/tbls
 
-dsn: mysql://{{ env.TBLS_DSN }}
+dsn: "{{ env.TBLS_DSN }}"
 
 docPath: docs/schema
 
