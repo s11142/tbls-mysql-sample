@@ -1,0 +1,39 @@
+# tbls configuration
+# https://github.com/k1LoW/tbls
+
+dsn: mysql://{{ env.TBLS_DSN }}
+
+docPath: docs/schema
+
+er:
+  format: mermaid
+
+# テーブル / カラムの補足コメント (DDL の COMMENT に加えて追記できる)
+comments:
+  - table: posts
+    tableComment: "ユーザーが投稿する記事を管理するテーブル"
+    columnComments:
+      body: "Markdown 形式で記述可能"
+  - table: comments
+    tableComment: "投稿に対するコメントを管理するテーブル"
+
+lint:
+  # 全テーブルに COMMENT を必須にする
+  requireTableComment:
+    enabled: true
+  # 全カラムに COMMENT を必須にする
+  requireColumnComment:
+    enabled: true
+  # 外部キーのないテーブルを検出
+  unrelatedTable:
+    enabled: true
+  # カラム数の上限 (デフォルト 50)
+  columnCount:
+    enabled: true
+    max: 50
+  # 重複リレーションを検出
+  duplicateRelations:
+    enabled: true
+  # 外部キーカラムにインデックスがあるか
+  requireForeignKeyIndex:
+    enabled: true

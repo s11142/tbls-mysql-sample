@@ -1,0 +1,58 @@
+name: tbls
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "schema/**"
+      - ".tbls.yml"
+  pull_request:
+    paths:
+      - "schema/**"
+      - ".tbls.yml"
+
+jobs:
+  tbls:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: sample
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load schema
+        run: mysql -h 127.0.0.1 -u root -ppassword sample < schema/init.sql
+
+      - name: Setup tbls
+        uses: k1LoW/setup-tbls@v1
+
+      - name: tbls lint
+        env:
+          TBLS_DSN: root:password@tcp(127.0.0.1:3306)/sample
+        run: tbls lint
+
+      - name: tbls doc
+        env:
+          TBLS_DSN: root:password@tcp(127.0.0.1:3306)/sample
+        run: tbls doc --force --rm-dist
+
+      - name: Check for diff
+        run: |
+          git add docs/schema/
+          if ! git diff --cached --exit-code --quiet; then
+            echo "::error::docs/schema/ is out of date. Run 'make doc' locally and commit the changes."
+            git diff --cached --stat
+            exit 1
+          fi
