@@ -1,0 +1,331 @@
+{
+  "name": "sample",
+  "tables": [
+    {
+      "name": "comments",
+      "type": "BASE TABLE",
+      "comment": "投稿に対するコメントを管理するテーブル",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment",
+          "comment": "ã‚³ãƒ¡ãƒ³ãƒˆID"
+        },
+        {
+          "name": "post_id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "comment": "å¯¾è±¡ã®æŠ•ç¨¿ID"
+        },
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "comment": "ã‚³ãƒ¡ãƒ³ãƒˆæŠ•ç¨¿è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID"
+        },
+        {
+          "name": "body",
+          "type": "text",
+          "nullable": false,
+          "comment": "ã‚³ãƒ¡ãƒ³ãƒˆæœ¬æ–‡"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "extra_def": "DEFAULT_GENERATED",
+          "comment": "ä½œæˆæ—¥æ™‚"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_comments_post_id",
+          "def": "KEY idx_comments_post_id (post_id) USING BTREE",
+          "table": "comments",
+          "columns": [
+            "post_id"
+          ]
+        },
+        {
+          "name": "idx_comments_user_id",
+          "def": "KEY idx_comments_user_id (user_id) USING BTREE",
+          "table": "comments",
+          "columns": [
+            "user_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "comments",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "fk_comments_post_id",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (post_id) REFERENCES posts (id)",
+          "table": "comments",
+          "referenced_table": "posts",
+          "columns": [
+            "post_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "fk_comments_user_id",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (user_id) REFERENCES users (id)",
+          "table": "comments",
+          "referenced_table": "users",
+          "columns": [
+            "user_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "comments",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `comments` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ã‚³ãƒ¡ãƒ³ãƒˆID',\n  `post_id` bigint unsigned NOT NULL COMMENT 'å¯¾è±¡ã®æŠ•ç¨¿ID',\n  `user_id` bigint unsigned NOT NULL COMMENT 'ã‚³ãƒ¡ãƒ³ãƒˆæŠ•ç¨¿è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID',\n  `body` text NOT NULL COMMENT 'ã‚³ãƒ¡ãƒ³ãƒˆæœ¬æ–‡',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'ä½œæˆæ—¥æ™‚',\n  PRIMARY KEY (`id`),\n  KEY `idx_comments_post_id` (`post_id`),\n  KEY `idx_comments_user_id` (`user_id`),\n  CONSTRAINT `fk_comments_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,\n  CONSTRAINT `fk_comments_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ã‚³ãƒ¡ãƒ³ãƒˆ'"
+    },
+    {
+      "name": "posts",
+      "type": "BASE TABLE",
+      "comment": "ユーザーが投稿する記事を管理するテーブル",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment",
+          "comment": "æŠ•ç¨¿ID"
+        },
+        {
+          "name": "user_id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "comment": "æŠ•ç¨¿è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID"
+        },
+        {
+          "name": "title",
+          "type": "varchar(255)",
+          "nullable": false,
+          "comment": "ã‚¿ã‚¤ãƒˆãƒ«"
+        },
+        {
+          "name": "body",
+          "type": "text",
+          "nullable": false,
+          "comment": "Markdown 形式で記述可能"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "extra_def": "DEFAULT_GENERATED",
+          "comment": "ä½œæˆæ—¥æ™‚"
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "extra_def": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "comment": "æ›´æ–°æ—¥æ™‚"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_posts_user_id",
+          "def": "KEY idx_posts_user_id (user_id) USING BTREE",
+          "table": "posts",
+          "columns": [
+            "user_id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "posts",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "fk_posts_user_id",
+          "type": "FOREIGN KEY",
+          "def": "FOREIGN KEY (user_id) REFERENCES users (id)",
+          "table": "posts",
+          "referenced_table": "users",
+          "columns": [
+            "user_id"
+          ],
+          "referenced_columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "posts",
+          "columns": [
+            "id"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `posts` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'æŠ•ç¨¿ID',\n  `user_id` bigint unsigned NOT NULL COMMENT 'æŠ•ç¨¿è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID',\n  `title` varchar(255) NOT NULL COMMENT 'ã‚¿ã‚¤ãƒˆãƒ«',\n  `body` text NOT NULL COMMENT 'æœ¬æ–‡',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'ä½œæˆæ—¥æ™‚',\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'æ›´æ–°æ—¥æ™‚',\n  PRIMARY KEY (`id`),\n  KEY `idx_posts_user_id` (`user_id`),\n  CONSTRAINT `fk_posts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='æŠ•ç¨¿'"
+    },
+    {
+      "name": "users",
+      "type": "BASE TABLE",
+      "comment": "ãƒ¦ãƒ¼ã‚¶ãƒ¼",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint unsigned",
+          "nullable": false,
+          "extra_def": "auto_increment",
+          "comment": "ãƒ¦ãƒ¼ã‚¶ãƒ¼ID"
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "nullable": false,
+          "comment": "ãƒ¦ãƒ¼ã‚¶ãƒ¼å"
+        },
+        {
+          "name": "email",
+          "type": "varchar(255)",
+          "nullable": false,
+          "comment": "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "extra_def": "DEFAULT_GENERATED",
+          "comment": "ä½œæˆæ—¥æ™‚"
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "extra_def": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
+          "comment": "æ›´æ–°æ—¥æ™‚"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY",
+          "def": "PRIMARY KEY (id) USING BTREE",
+          "table": "users",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "uk_users_email",
+          "def": "UNIQUE KEY uk_users_email (email) USING BTREE",
+          "table": "users",
+          "columns": [
+            "email"
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "name": "PRIMARY",
+          "type": "PRIMARY KEY",
+          "def": "PRIMARY KEY (id)",
+          "table": "users",
+          "columns": [
+            "id"
+          ]
+        },
+        {
+          "name": "uk_users_email",
+          "type": "UNIQUE",
+          "def": "UNIQUE KEY uk_users_email (email)",
+          "table": "users",
+          "columns": [
+            "email"
+          ]
+        }
+      ],
+      "def": "CREATE TABLE `users` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ãƒ¦ãƒ¼ã‚¶ãƒ¼ID',\n  `name` varchar(100) NOT NULL COMMENT 'ãƒ¦ãƒ¼ã‚¶ãƒ¼å',\n  `email` varchar(255) NOT NULL COMMENT 'ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'ä½œæˆæ—¥æ™‚',\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'æ›´æ–°æ—¥æ™‚',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uk_users_email` (`email`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ãƒ¦ãƒ¼ã‚¶ãƒ¼'"
+    }
+  ],
+  "relations": [
+    {
+      "table": "comments",
+      "columns": [
+        "post_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "posts",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (post_id) REFERENCES posts (id)"
+    },
+    {
+      "table": "comments",
+      "columns": [
+        "user_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (user_id) REFERENCES users (id)"
+    },
+    {
+      "table": "posts",
+      "columns": [
+        "user_id"
+      ],
+      "cardinality": "zero_or_more",
+      "parent_table": "users",
+      "parent_columns": [
+        "id"
+      ],
+      "parent_cardinality": "exactly_one",
+      "def": "FOREIGN KEY (user_id) REFERENCES users (id)"
+    }
+  ],
+  "driver": {
+    "name": "mysql",
+    "database_version": "8.0.45",
+    "meta": {
+      "dict": {
+        "Functions": "Stored procedures and functions"
+      }
+    }
+  }
+}

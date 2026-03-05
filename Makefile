@@ -9,10 +9,10 @@ down: ## Stop MySQL
 	docker compose down
 
 doc: ## Generate schema docs
-	TBLS_DSN=$(DSN) tbls doc --force --rm-dist
+	TBLS_DSN=$(DSN) tbls doc --force --rm-dist --config .tbls.yml
 
 diff: ## Show diff between DB and docs
-	TBLS_DSN=$(DSN) tbls diff
+	TBLS_DSN=$(DSN) tbls diff --config .tbls.yml
 
 lint: ## Lint schema
-	TBLS_DSN=$(DSN) tbls lint
+	TBLS_DSN=$(DSN) tbls lint --config .tbls.yml
