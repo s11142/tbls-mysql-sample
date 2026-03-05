@@ -1,4 +1,4 @@
-DSN := root:password@tcp(127.0.0.1:3306)/sample
+DSN := mysql://root:password@127.0.0.1:3306/sample
 
 .PHONY: up down doc diff lint
 

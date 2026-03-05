@@ -40,12 +40,12 @@ jobs:
 
       - name: tbls lint
         env:
-          TBLS_DSN: root:password@tcp(127.0.0.1:3306)/sample
+          TBLS_DSN: mysql://root:password@127.0.0.1:3306/sample
         run: tbls lint
 
       - name: tbls doc
         env:
-          TBLS_DSN: root:password@tcp(127.0.0.1:3306)/sample
+          TBLS_DSN: mysql://root:password@127.0.0.1:3306/sample
         run: tbls doc --force --rm-dist
 
       - name: Check for diff
