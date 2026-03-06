@@ -2,21 +2,21 @@
 
 ## Description
 
-ãƒ¦ãƒ¼ã‚¶ãƒ¼
+ユーザー
 
 <details>
 <summary><strong>Table Definition</strong></summary>
 
 ```sql
 CREATE TABLE `users` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ãƒ¦ãƒ¼ã‚¶ãƒ¼ID',
-  `name` varchar(100) NOT NULL COMMENT 'ãƒ¦ãƒ¼ã‚¶ãƒ¼å',
-  `email` varchar(255) NOT NULL COMMENT 'ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'ä½œæˆæ—¥æ™‚',
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'æ›´æ–°æ—¥æ™‚',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ユーザーID',
+  `name` varchar(100) NOT NULL COMMENT 'ユーザー名',
+  `email` varchar(255) NOT NULL COMMENT 'メールアドレス',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_users_email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ãƒ¦ãƒ¼ã‚¶ãƒ¼'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ユーザー'
 ```
 
 </details>
@@ -25,11 +25,11 @@ CREATE TABLE `users` (
 
 | Name | Type | Default | Nullable | Extra Definition | Children | Parents | Comment |
 | ---- | ---- | ------- | -------- | ---------------- | -------- | ------- | ------- |
-| id | bigint unsigned |  | false | auto_increment | [comments](comments.md) [posts](posts.md) |  | ãƒ¦ãƒ¼ã‚¶ãƒ¼ID |
-| name | varchar(100) |  | false |  |  |  | ãƒ¦ãƒ¼ã‚¶ãƒ¼å |
-| email | varchar(255) |  | false |  |  |  | ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ |
-| created_at | datetime | CURRENT_TIMESTAMP | false | DEFAULT_GENERATED |  |  | ä½œæˆæ—¥æ™‚ |
-| updated_at | datetime | CURRENT_TIMESTAMP | false | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |  |  | æ›´æ–°æ—¥æ™‚ |
+| id | bigint unsigned |  | false | auto_increment | [comments](comments.md) [posts](posts.md) |  | ユーザーID |
+| name | varchar(100) |  | false |  |  |  | ユーザー名 |
+| email | varchar(255) |  | false |  |  |  | メールアドレス |
+| created_at | datetime | CURRENT_TIMESTAMP | false | DEFAULT_GENERATED |  |  | 作成日時 |
+| updated_at | datetime | CURRENT_TIMESTAMP | false | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |  |  | 更新日時 |
 
 ## Constraints
 

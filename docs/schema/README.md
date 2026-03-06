@@ -6,7 +6,7 @@
 | ---- | ------- | ------- | ---- |
 | [comments](comments.md) | 5 | 投稿に対するコメントを管理するテーブル | BASE TABLE |
 | [posts](posts.md) | 6 | ユーザーが投稿する記事を管理するテーブル | BASE TABLE |
-| [users](users.md) | 5 | ãƒ¦ãƒ¼ã‚¶ãƒ¼ | BASE TABLE |
+| [users](users.md) | 5 | ユーザー | BASE TABLE |
 
 ## Relations
 

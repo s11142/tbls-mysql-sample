@@ -9,17 +9,17 @@
 
 ```sql
 CREATE TABLE `comments` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ã‚³ãƒ¡ãƒ³ãƒˆID',
-  `post_id` bigint unsigned NOT NULL COMMENT 'å¯¾è±¡ã®æŠ•ç¨¿ID',
-  `user_id` bigint unsigned NOT NULL COMMENT 'ã‚³ãƒ¡ãƒ³ãƒˆæŠ•ç¨¿è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID',
-  `body` text NOT NULL COMMENT 'ã‚³ãƒ¡ãƒ³ãƒˆæœ¬æ–‡',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'ä½œæˆæ—¥æ™‚',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'コメントID',
+  `post_id` bigint unsigned NOT NULL COMMENT '対象の投稿ID',
+  `user_id` bigint unsigned NOT NULL COMMENT 'コメント投稿者のユーザーID',
+  `body` text NOT NULL COMMENT 'コメント本文',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
   PRIMARY KEY (`id`),
   KEY `idx_comments_post_id` (`post_id`),
   KEY `idx_comments_user_id` (`user_id`),
   CONSTRAINT `fk_comments_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_comments_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ã‚³ãƒ¡ãƒ³ãƒˆ'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='コメント'
 ```
 
 </details>
@@ -28,11 +28,11 @@ CREATE TABLE `comments` (
 
 | Name | Type | Default | Nullable | Extra Definition | Children | Parents | Comment |
 | ---- | ---- | ------- | -------- | ---------------- | -------- | ------- | ------- |
-| id | bigint unsigned |  | false | auto_increment |  |  | ã‚³ãƒ¡ãƒ³ãƒˆID |
-| post_id | bigint unsigned |  | false |  |  | [posts](posts.md) | å¯¾è±¡ã®æŠ•ç¨¿ID |
-| user_id | bigint unsigned |  | false |  |  | [users](users.md) | ã‚³ãƒ¡ãƒ³ãƒˆæŠ•ç¨¿è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID |
-| body | text |  | false |  |  |  | ã‚³ãƒ¡ãƒ³ãƒˆæœ¬æ–‡ |
-| created_at | datetime | CURRENT_TIMESTAMP | false | DEFAULT_GENERATED |  |  | ä½œæˆæ—¥æ™‚ |
+| id | bigint unsigned |  | false | auto_increment |  |  | コメントID |
+| post_id | bigint unsigned |  | false |  |  | [posts](posts.md) | 対象の投稿ID |
+| user_id | bigint unsigned |  | false |  |  | [users](users.md) | コメント投稿者のユーザーID |
+| body | text |  | false |  |  |  | コメント本文 |
+| created_at | datetime | CURRENT_TIMESTAMP | false | DEFAULT_GENERATED |  |  | 作成日時 |
 
 ## Constraints
 

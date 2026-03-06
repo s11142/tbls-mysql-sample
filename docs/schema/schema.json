@@ -11,25 +11,25 @@
           "type": "bigint unsigned",
           "nullable": false,
           "extra_def": "auto_increment",
-          "comment": "ã‚³ãƒ¡ãƒ³ãƒˆID"
+          "comment": "コメントID"
         },
         {
           "name": "post_id",
           "type": "bigint unsigned",
           "nullable": false,
-          "comment": "å¯¾è±¡ã®æŠ•ç¨¿ID"
+          "comment": "対象の投稿ID"
         },
         {
           "name": "user_id",
           "type": "bigint unsigned",
           "nullable": false,
-          "comment": "ã‚³ãƒ¡ãƒ³ãƒˆæŠ•ç¨¿è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID"
+          "comment": "コメント投稿者のユーザーID"
         },
         {
           "name": "body",
           "type": "text",
           "nullable": false,
-          "comment": "ã‚³ãƒ¡ãƒ³ãƒˆæœ¬æ–‡"
+          "comment": "コメント本文"
         },
         {
           "name": "created_at",
@@ -37,7 +37,7 @@
           "nullable": false,
           "default": "CURRENT_TIMESTAMP",
           "extra_def": "DEFAULT_GENERATED",
-          "comment": "ä½œæˆæ—¥æ™‚"
+          "comment": "作成日時"
         }
       ],
       "indexes": [
@@ -103,7 +103,7 @@
           ]
         }
       ],
-      "def": "CREATE TABLE `comments` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ã‚³ãƒ¡ãƒ³ãƒˆID',\n  `post_id` bigint unsigned NOT NULL COMMENT 'å¯¾è±¡ã®æŠ•ç¨¿ID',\n  `user_id` bigint unsigned NOT NULL COMMENT 'ã‚³ãƒ¡ãƒ³ãƒˆæŠ•ç¨¿è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID',\n  `body` text NOT NULL COMMENT 'ã‚³ãƒ¡ãƒ³ãƒˆæœ¬æ–‡',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'ä½œæˆæ—¥æ™‚',\n  PRIMARY KEY (`id`),\n  KEY `idx_comments_post_id` (`post_id`),\n  KEY `idx_comments_user_id` (`user_id`),\n  CONSTRAINT `fk_comments_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,\n  CONSTRAINT `fk_comments_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ã‚³ãƒ¡ãƒ³ãƒˆ'"
+      "def": "CREATE TABLE `comments` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'コメントID',\n  `post_id` bigint unsigned NOT NULL COMMENT '対象の投稿ID',\n  `user_id` bigint unsigned NOT NULL COMMENT 'コメント投稿者のユーザーID',\n  `body` text NOT NULL COMMENT 'コメント本文',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',\n  PRIMARY KEY (`id`),\n  KEY `idx_comments_post_id` (`post_id`),\n  KEY `idx_comments_user_id` (`user_id`),\n  CONSTRAINT `fk_comments_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE,\n  CONSTRAINT `fk_comments_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='コメント'"
     },
     {
       "name": "posts",
@@ -115,19 +115,19 @@
           "type": "bigint unsigned",
           "nullable": false,
           "extra_def": "auto_increment",
-          "comment": "æŠ•ç¨¿ID"
+          "comment": "投稿ID"
         },
         {
           "name": "user_id",
           "type": "bigint unsigned",
           "nullable": false,
-          "comment": "æŠ•ç¨¿è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID"
+          "comment": "投稿者のユーザーID"
         },
         {
           "name": "title",
           "type": "varchar(255)",
           "nullable": false,
-          "comment": "ã‚¿ã‚¤ãƒˆãƒ«"
+          "comment": "タイトル"
         },
         {
           "name": "body",
@@ -141,7 +141,7 @@
           "nullable": false,
           "default": "CURRENT_TIMESTAMP",
           "extra_def": "DEFAULT_GENERATED",
-          "comment": "ä½œæˆæ—¥æ™‚"
+          "comment": "作成日時"
         },
         {
           "name": "updated_at",
@@ -149,7 +149,7 @@
           "nullable": false,
           "default": "CURRENT_TIMESTAMP",
           "extra_def": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
-          "comment": "æ›´æ–°æ—¥æ™‚"
+          "comment": "更新日時"
         }
       ],
       "indexes": [
@@ -194,31 +194,31 @@
           ]
         }
       ],
-      "def": "CREATE TABLE `posts` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'æŠ•ç¨¿ID',\n  `user_id` bigint unsigned NOT NULL COMMENT 'æŠ•ç¨¿è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ID',\n  `title` varchar(255) NOT NULL COMMENT 'ã‚¿ã‚¤ãƒˆãƒ«',\n  `body` text NOT NULL COMMENT 'æœ¬æ–‡',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'ä½œæˆæ—¥æ™‚',\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'æ›´æ–°æ—¥æ™‚',\n  PRIMARY KEY (`id`),\n  KEY `idx_posts_user_id` (`user_id`),\n  CONSTRAINT `fk_posts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='æŠ•ç¨¿'"
+      "def": "CREATE TABLE `posts` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '投稿ID',\n  `user_id` bigint unsigned NOT NULL COMMENT '投稿者のユーザーID',\n  `title` varchar(255) NOT NULL COMMENT 'タイトル',\n  `body` text NOT NULL COMMENT '本文',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',\n  PRIMARY KEY (`id`),\n  KEY `idx_posts_user_id` (`user_id`),\n  CONSTRAINT `fk_posts_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='投稿'"
     },
     {
       "name": "users",
       "type": "BASE TABLE",
-      "comment": "ãƒ¦ãƒ¼ã‚¶ãƒ¼",
+      "comment": "ユーザー",
       "columns": [
         {
           "name": "id",
           "type": "bigint unsigned",
           "nullable": false,
           "extra_def": "auto_increment",
-          "comment": "ãƒ¦ãƒ¼ã‚¶ãƒ¼ID"
+          "comment": "ユーザーID"
         },
         {
           "name": "name",
           "type": "varchar(100)",
           "nullable": false,
-          "comment": "ãƒ¦ãƒ¼ã‚¶ãƒ¼å"
+          "comment": "ユーザー名"
         },
         {
           "name": "email",
           "type": "varchar(255)",
           "nullable": false,
-          "comment": "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹"
+          "comment": "メールアドレス"
         },
         {
           "name": "created_at",
@@ -226,7 +226,7 @@
           "nullable": false,
           "default": "CURRENT_TIMESTAMP",
           "extra_def": "DEFAULT_GENERATED",
-          "comment": "ä½œæˆæ—¥æ™‚"
+          "comment": "作成日時"
         },
         {
           "name": "updated_at",
@@ -234,7 +234,7 @@
           "nullable": false,
           "default": "CURRENT_TIMESTAMP",
           "extra_def": "DEFAULT_GENERATED on update CURRENT_TIMESTAMP",
-          "comment": "æ›´æ–°æ—¥æ™‚"
+          "comment": "更新日時"
         }
       ],
       "indexes": [
@@ -275,7 +275,7 @@
           ]
         }
       ],
-      "def": "CREATE TABLE `users` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ãƒ¦ãƒ¼ã‚¶ãƒ¼ID',\n  `name` varchar(100) NOT NULL COMMENT 'ãƒ¦ãƒ¼ã‚¶ãƒ¼å',\n  `email` varchar(255) NOT NULL COMMENT 'ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'ä½œæˆæ—¥æ™‚',\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'æ›´æ–°æ—¥æ™‚',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uk_users_email` (`email`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ãƒ¦ãƒ¼ã‚¶ãƒ¼'"
+      "def": "CREATE TABLE `users` (\n  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ユーザーID',\n  `name` varchar(100) NOT NULL COMMENT 'ユーザー名',\n  `email` varchar(255) NOT NULL COMMENT 'メールアドレス',\n  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',\n  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',\n  PRIMARY KEY (`id`),\n  UNIQUE KEY `uk_users_email` (`email`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='ユーザー'"
     }
   ],
   "relations": [
