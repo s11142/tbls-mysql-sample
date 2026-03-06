@@ -61,6 +61,6 @@ jobs:
           git add docs/schema/
           if ! git diff --cached --exit-code --quiet; then
             echo "::error::docs/schema/ is out of date. Run 'make doc' locally and commit the changes."
-            git diff --cached
+            git diff --cached --stat
             exit 1
           fi
