@@ -5,11 +5,15 @@ on:
     branches: [main]
     paths:
       - "schema/**"
+      - "docs/schema/**"
+      - "docker-compose.yml"
       - ".tbls.yml"
       - ".github/workflows/tbls.yml"
   pull_request:
     paths:
       - "schema/**"
+      - "docs/schema/**"
+      - "docker-compose.yml"
       - ".tbls.yml"
       - ".github/workflows/tbls.yml"
 
