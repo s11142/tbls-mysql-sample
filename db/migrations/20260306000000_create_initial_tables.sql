@@ -1,6 +1,4 @@
--- =============================================================
--- サンプルスキーマ: users, posts, comments
--- =============================================================
+-- migrate:up
 
 CREATE TABLE users (
   id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ユーザーID',
@@ -36,3 +34,9 @@ CREATE TABLE comments (
   CONSTRAINT fk_comments_post_id FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE,
   CONSTRAINT fk_comments_user_id FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='コメント';
+
+-- migrate:down
+
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS users;

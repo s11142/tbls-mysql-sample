@@ -4,14 +4,14 @@ on:
   push:
     branches: [main]
     paths:
-      - "schema/**"
+      - "db/migrations/**"
       - "docs/schema/**"
       - "docker-compose.yml"
       - ".tbls.yml"
       - ".github/workflows/tbls.yml"
   pull_request:
     paths:
-      - "schema/**"
+      - "db/migrations/**"
       - "docs/schema/**"
       - "docker-compose.yml"
       - ".tbls.yml"
@@ -38,8 +38,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Load schema
-        run: mysql -h 127.0.0.1 -u root -ppassword sample < schema/init.sql
+      - name: Install dbmate
+        run: |
+          curl -fsSL -o /usr/local/bin/dbmate https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-amd64
+          chmod +x /usr/local/bin/dbmate
+
+      - name: Run migrations
+        env:
+          DATABASE_URL: mysql://root:password@127.0.0.1:3306/sample
+        run: dbmate up
 
       - name: Setup tbls
         uses: k1LoW/setup-tbls@v1

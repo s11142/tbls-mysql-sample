@@ -8,6 +8,10 @@ docPath: docs/schema
 er:
   format: mermaid
 
+# dbmate の管理テーブルを除外
+exclude:
+  - schema_migrations
+
 # テーブル / カラムの補足コメント (DDL の COMMENT に加えて追記できる)
 comments:
   - table: posts

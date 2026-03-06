@@ -1,14 +1,16 @@
 # tbls-mysql-sample
 
-[tbls](https://github.com/k1LoW/tbls) を使った MySQL スキーマドキュメント自動生成・CI lint の運用サンプルです。
+[tbls](https://github.com/k1LoW/tbls) + [dbmate](https://github.com/amacneil/dbmate) + GitHub Actions のサンプルリポジトリです。
+マイグレーション管理とスキーマドキュメント自動生成・CI lint の運用例。
 
 ## 構成
 
 ```
-schema/init.sql          # DDL (テーブル定義)
+db/migrations/           # dbmate マイグレーションファイル
 docs/schema/             # tbls が生成するドキュメント (Git 管理)
 .tbls.yml                # tbls 設定
-.github/workflows/tbls.yml  # CI (lint + doc diff check)
+.mise.toml               # dbmate / tbls のバージョン固定
+.github/workflows/tbls.yml  # CI (migrate + lint + doc diff check)
 docker-compose.yml       # ローカル MySQL
 Makefile                 # コマンドショートカット
 ```
@@ -18,13 +20,21 @@ Makefile                 # コマンドショートカット
 ### 前提
 
 - Docker
-- [tbls](https://github.com/k1LoW/tbls#install)
+- [mise](https://mise.jdx.dev/)
+
+```bash
+# dbmate / tbls をインストール
+mise install
+```
 
 ### ローカル実行
 
 ```bash
 # MySQL 起動
 make up
+
+# マイグレーション実行
+make migrate
 
 # ドキュメント生成
 make doc
@@ -35,25 +45,37 @@ make lint
 # DB とドキュメントの差分チェック
 make diff
 
+# マイグレーションをロールバック
+make rollback
+
 # MySQL 停止
 make down
 ```
 
 ## CI の仕組み
 
-GitHub Actions で `schema/` または `.tbls.yml` が変更されたときに自動実行されます。
+GitHub Actions で `db/migrations/` や `.tbls.yml` が変更されたときに自動実行されます。
 
-1. **tbls lint** — テーブル / カラムコメントの有無、外部キーインデックスなどをチェック
-2. **tbls doc** — ドキュメントを再生成
-3. **diff check** — `docs/schema/` に差分があれば CI を失敗させる → ローカルで `make doc` してコミットする運用
+1. **dbmate up** — マイグレーションを適用して最新スキーマを構築
+2. **tbls lint** — テーブル / カラムコメントの有無、外部キーインデックスなどをチェック
+3. **tbls doc** — ドキュメントを再生成
+4. **diff check** — `docs/schema/` に差分があれば CI を失敗させる
 
-## カスタマイズ
+## 開発フロー
 
-### テーブル追加時
+### スキーマ変更時
 
-1. `schema/init.sql` に DDL を追加（全テーブル・全カラムに `COMMENT` を付ける）
-2. `make up && make doc` でドキュメント再生成
-3. 変更をコミット & プッシュ
+1. マイグレーションファイルを作成
+   ```bash
+   DATABASE_URL="mysql://root:password@127.0.0.1:3306/sample" dbmate new add_status_to_posts
+   ```
+2. 作成されたファイルに `-- migrate:up` / `-- migrate:down` を記述
+3. マイグレーション適用 & ドキュメント再生成
+   ```bash
+   make migrate
+   make doc
+   ```
+4. 変更をコミット & プッシュ（マイグレーション + docs/schema/ の差分）
 
 ### lint ルール変更
 
