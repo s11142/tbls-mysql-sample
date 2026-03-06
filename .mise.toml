@@ -6,14 +6,6 @@ tbls = "1.92.3"
 DATABASE_URL = "mysql://root:password@127.0.0.1:3306/sample"
 TBLS_DSN = "mysql://root:password@127.0.0.1:3306/sample"
 
-[tasks.up]
-description = "Start MySQL"
-run = "docker compose up -d --wait"
-
-[tasks.down]
-description = "Stop MySQL"
-run = "docker compose down"
-
 [tasks.migrate]
 description = "Run migrations"
 run = "dbmate up"

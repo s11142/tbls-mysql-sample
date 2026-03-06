@@ -11,27 +11,26 @@ docs/schema/             # tbls が生成するドキュメント (Git 管理)
 .tbls.yml                # tbls 設定
 .mise.toml               # dbmate / tbls のバージョン固定 + タスク定義
 .github/workflows/tbls.yml  # CI (migrate + lint + doc diff check)
-docker-compose.yml       # ローカル MySQL
 ```
 
 ## セットアップ
 
 ### 前提
 
-- Docker
 - [mise](https://mise.jdx.dev/)
+- Webアプリ側の MySQL が起動していること
 
 ```bash
 # dbmate / tbls をインストール
 mise install
 ```
 
+> **NOTE:** `DATABASE_URL` / `TBLS_DSN` のデフォルトは `.mise.toml` の `[env]` に定義されています。
+> Webアプリ側の MySQL が異なる接続先の場合は、環境変数で上書きしてください。
+
 ### ローカル実行
 
 ```bash
-# MySQL 起動
-mise run up
-
 # マイグレーション実行
 mise run migrate
 
@@ -46,9 +45,6 @@ mise run diff
 
 # マイグレーションをロールバック
 mise run rollback
-
-# MySQL 停止
-mise run down
 ```
 
 ## CI の仕組み

@@ -6,7 +6,6 @@ on:
     paths:
       - "db/migrations/**"
       - "docs/schema/**"
-      - "docker-compose.yml"
       - ".tbls.yml"
       - ".mise.toml"
       - ".github/workflows/tbls.yml"
@@ -14,7 +13,6 @@ on:
     paths:
       - "db/migrations/**"
       - "docs/schema/**"
-      - "docker-compose.yml"
       - ".tbls.yml"
       - ".mise.toml"
       - ".github/workflows/tbls.yml"
