@@ -39,6 +39,8 @@ jobs:
 
       - name: Setup tbls
         uses: k1LoW/setup-tbls@v1
+        with:
+          version: v1.92.3
 
       - name: tbls lint
         env:
